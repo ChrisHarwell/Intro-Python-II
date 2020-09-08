@@ -78,25 +78,28 @@ while playing:
         Choose [n]:North, [s]:South, [e]:East, [w]:West . . .
         Or press [q] to quit!\n
         ''').lower().split(' ')
+    if len(player_input) == 0:
+        print('Please choose a direction')
 
-    if player_input[0] == 'q':
-        playing = False
-        print('You have quit the game. See ya next time!')
-    elif player_input[0] == 'n':
-        goDirection(player, player_input[0])
-    elif player_input[0] == 's':
-        goDirection(player, player_input[0])
-    elif player_input[0] == 'e':
-        goDirection(player, player_input[0])
-    elif player_input[0] == 'w':
-        goDirection(player, player_input[0])
-    elif player_input[0] == 'i':
-        player.check_inv()
-    if player_input[0] == 'search':
-        if player.location.items == []:
-            print('You did not find anything here.')
-        else:
-            print(player.location.items)
+    if len(player_input) == 1:
+        if player_input[0] == 'q':
+            playing = False
+            print('You have quit the game. See ya next time!')
+        elif player_input[0] == 'n':
+            goDirection(player, player_input[0])
+        elif player_input[0] == 's':
+            goDirection(player, player_input[0])
+        elif player_input[0] == 'e':
+            goDirection(player, player_input[0])
+        elif player_input[0] == 'w':
+            goDirection(player, player_input[0])
+        elif player_input[0] == 'i':
+            player.check_inv()
+        if player_input[0] == 'search':
+            if player.location.items == []:
+                print('You did not find anything here.')
+            else:
+                print(player.location.items)
 
 if len(player_input) > 1:
     if player_input[0] == 'take':
