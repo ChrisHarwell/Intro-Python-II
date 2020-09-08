@@ -1,5 +1,7 @@
 from room import Room
-
+from player import Player
+from item import Item
+from time import sleep
 # Declare all the rooms
 
 room = {
@@ -21,6 +23,12 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+iron_sword = Item('sword', 'A simple, but sturdy iron sword')
+old_broom = Item('broom', 'A broom, dustier even than this place')
+
+# Adding items to rooms:
+room['outside'].add_item(iron_sword.item)
+room['foyer'].add_item(old_broom)
 
 # Link rooms together
 
@@ -38,6 +46,8 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+player = Player(room['outside'])
+
 
 # Write a loop that:
 #
@@ -48,4 +58,53 @@ room['treasure'].s_to = room['narrow']
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
 #
+def goDirection(player, direction):
+    attr = direction + '_to'
+
+    if hasattr(player.location, attr):
+        player.location = getattr(player.location, attr)
+    else:
+        print("You can't go in that direction!")
+
+
+playing = True
+
+while playing:
+    print(f"\n {player.location.description} {player.location} \n")
+
+    player_input = input(
+        '''\n
+        Where do you want to go?
+        Choose [n]:North, [s]:South, [e]:East, [w]:West . . .
+        Or press [q] to quit!\n
+        ''').lower().split(' ')
+
+    if player_input[0] == 'q':
+        playing = False
+        print('You have quit the game. See ya next time!')
+    elif player_input[0] == 'n':
+        goDirection(player, player_input[0])
+    elif player_input[0] == 's':
+        goDirection(player, player_input[0])
+    elif player_input[0] == 'e':
+        goDirection(player, player_input[0])
+    elif player_input[0] == 'w':
+        goDirection(player, player_input[0])
+    elif player_input[0] == 'i':
+        player.check_inv()
+    if player_input[0] == 'search':
+        if player.location.items == []:
+            print('You did not find anything here.')
+        else:
+            print(player.location.items)
+
+if len(player_input) > 1:
+    if player_input[0] == 'take':
+        for item in player.location.items:
+            if player_input[1] == item[0]:
+                player.take_item(item)
+                player.location.remove_item(item)
+                print(player.location.items, player.inventory)
+
+
 # If the user enters "q", quit the game.
