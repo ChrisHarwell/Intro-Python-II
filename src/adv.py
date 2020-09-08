@@ -77,7 +77,7 @@ while playing:
         Where do you want to go?
         Choose [n]:North, [s]:South, [e]:East, [w]:West . . .
         Or press [q] to quit!\n
-        ''').lower().split(' ')
+        ''').lower().split()
     if len(player_input) == 0:
         print('Please choose a direction')
 
